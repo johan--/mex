@@ -30,8 +30,8 @@
 
             # Ensure templates directory is included
             postInstall = ''
-              mkdir -p $out/lib/node_modules/promexeus/templates
-              cp -r templates/* $out/lib/node_modules/promexeus/templates/
+              mkdir -p $out/lib/node_modules/mex-cli/templates
+              cp -r templates/* $out/lib/node_modules/mex-cli/templates/
             '';
 
             meta = with pkgs.lib; {
