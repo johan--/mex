@@ -2,7 +2,8 @@
  * Public API for `mex-agent`.
  *
  * Everything re-exported from this file is part of the package's compatibility
- * contract — removing or reshaping any of these is a breaking change.
+ * contract. See COMPATIBILITY.md at the repo root for the versioning policy
+ * and what counts as a breaking change.
  *
  * Internal modules (`src/cli.ts`, `src/sync/`, `src/scanner/`, `src/setup/`,
  * `src/tui.ts`, `src/watch.ts`, `src/doctor.ts`, etc.) are NOT part of the
@@ -20,7 +21,7 @@ export {
   eventLogPath,
   EVENT_KINDS,
 } from "./events.js";
-export type { EventEntry, EventKind } from "./events.js";
+export type { EventEntry, EventKind, LogOpts } from "./events.js";
 
 // ── Drift detection ──────────────────────────────────────────────────────────
 export {
