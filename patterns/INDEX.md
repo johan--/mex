@@ -23,3 +23,4 @@ Lookup table for all pattern files in this directory. Check here before starting
 
 | Pattern | Use when |
 |---------|----------|
+| [readme-refresh.md](readme-refresh.md) | Refreshing the README, screenshots, diagrams, sponsor language, or public project positioning |
