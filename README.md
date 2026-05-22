@@ -29,7 +29,7 @@ npx mex-agent setup
 ```
 
 <p align="center">
-  <img src="screenshots/mex-newDash.jpg" alt="mex operational memory dashboard" width="640">
+  <img src="screenshots/mex-DashNew.jpg" alt="mex operational memory dashboard" width="640">
 </p>
 
 ## Why mex?
