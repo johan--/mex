@@ -1,5 +1,8 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from "vitest";
 import { Command, InvalidArgumentError } from "commander";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { runLog, runTimeline } from "../src/events.js";
 import type { MexConfig } from "../src/types.js";
 
@@ -202,5 +205,19 @@ describe("mex timeline parsing", () => {
       since: "30d",
       type: "risk",
     });
+  });
+});
+
+describe("mex --version", () => {
+  it("reports the version from package.json (guards against hard-coded drift)", async () => {
+    // cli.js is imported (and parsed with a safe argv) in beforeAll; this
+    // returns the cached module, so we read the version commander was configured with.
+    const { program } = await import("../src/cli.js");
+
+    const pkgPath = join(dirname(fileURLToPath(import.meta.url)), "..", "package.json");
+    const { version } = JSON.parse(readFileSync(pkgPath, "utf8")) as { version: string };
+
+    expect(program.version()).toBe(version);
+    expect(program.version()).not.toBe("0.3.5"); // the original bug (#48)
   });
 });

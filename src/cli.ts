@@ -2,6 +2,7 @@ import chalk from "chalk";
 import { Command, InvalidArgumentError } from "commander";
 import { findConfig } from "./config.js";
 import { reportConsole, reportQuiet, reportJSON, reportVerbose } from "./reporter.js";
+import { VERSION } from "./version.js";
 
 export function parseIntArg(raw: string): number {
   const n = Number.parseInt(raw, 10);
@@ -19,7 +20,7 @@ export function parsePositiveIntArg(raw: string): number {
   return n;
 }
 
-const program = new Command();
+export const program = new Command();
 
 async function runTuiCommand(): Promise<void> {
   const { launchTui } = await import("./tui.js");
@@ -29,7 +30,7 @@ async function runTuiCommand(): Promise<void> {
 program
   .name("mex")
   .description("CLI engine for mex scaffold — drift detection, pre-analysis, and targeted sync")
-  .version("0.3.5")
+  .version(VERSION)
   .showHelpAfterError()
   .action(async () => {
     await runTuiCommand();
