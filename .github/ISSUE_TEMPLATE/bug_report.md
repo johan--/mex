@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help us improve
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---
@@ -12,27 +12,25 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+1. Run `mex ...`
+2. In a scaffold that looks like '...'
+3. See error
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**Command output**
+If applicable, paste the relevant output. For drift issues, include `mex check --json`.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+```
+<paste output here>
+```
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+**Environment**
+ - mex version (`mex --version`):
+ - Node.js version (`node --version`):
+ - OS: [e.g. macOS 15, Ubuntu 24.04, Windows 11 + WSL]
+ - Install method: [npm global / git clone]
 
 **Additional context**
 Add any other context about the problem here.

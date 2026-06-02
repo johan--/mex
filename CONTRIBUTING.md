@@ -2,6 +2,8 @@
 
 Thanks for your interest in contributing! Here's how to get started.
 
+**New here?** The best starting point is an issue labeled [`good first issue`](https://github.com/theDakshJaitly/mex/labels/good%20first%20issue) — most are self-contained drift checkers, and there are 9 existing checkers to copy from. See [Adding a drift checker](#adding-a-drift-checker) below.
+
 ## Setup
 
 ```bash
@@ -45,6 +47,30 @@ src/
   reporter.ts         # Terminal output formatting
 test/                 # Vitest tests
 ```
+
+## Adding a drift checker
+
+New checkers are the most newcomer-friendly contribution. A checker is a small function that inspects scaffold files (or extracted claims) and returns `DriftIssue[]`. There are 9 existing checkers in `src/drift/checkers/` — pick the closest as a template.
+
+1. **Create `src/drift/checkers/<name>.ts`.** There are two shapes:
+   - **Claim-based** — operates on extracted claims, e.g. `checkPaths(claims, projectRoot, scaffoldRoot)` in `path.ts`.
+   - **Structural** — operates on the scaffold directly, e.g. `checkIndexSync(projectRoot, scaffoldRoot)` in `index-sync.ts`.
+
+   Return a `DriftIssue[]`:
+   ```ts
+   {
+     code,                        // an IssueCode (see step 2)
+     severity,                    // "error" | "warning" | "info"
+     file,                        // scaffold file the issue is in
+     line,                        // number | null
+     message,
+     claim?,                      // the claim that triggered it, if any
+   }
+   ```
+2. **Add your `code` to the `IssueCode` union in `src/types.ts`.** It's a closed union — the build fails until your code is listed there.
+3. **Register the checker in `src/drift/index.ts`:** import it, invoke it in the matching block (the per-file loop for per-file checks, or the claim/structural sections), and push its result count to `checkerIssueCounts`.
+4. **Add tests to `test/checkers.test.ts`** — cover both a triggering case and a clean case.
+5. **Run `npm run typecheck && npm test && npm run build`** before opening the PR.
 
 ## Reporting bugs
 
