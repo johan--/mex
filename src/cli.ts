@@ -1,5 +1,7 @@
 import chalk from "chalk";
 import { Command, InvalidArgumentError } from "commander";
+import { realpathSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import { findConfig } from "./config.js";
 import { reportConsole, reportQuiet, reportJSON, reportVerbose } from "./reporter.js";
 import { VERSION } from "./version.js";
@@ -300,7 +302,21 @@ program
     console.log();
   });
 
-program.parse();
+// Skip auto-parse when imported (e.g. by tests). The bin entry is built by
+// tsup as ./dist/cli.js with a shebang banner; only run program.parse() when
+// this module is the script being invoked. Resolve argv[1] so symlinked bins
+// (npm global, npx, node_modules/.bin) match import.meta.url.
+let isMainModule = false;
+if (process.argv[1]) {
+  try {
+    isMainModule = import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href;
+  } catch {
+    // argv[1] is missing or not on disk (e.g. test fixtures) — not the main entry.
+  }
+}
+if (isMainModule) {
+  program.parse();
+}
 
 function buildCompletion(shell: string): string {
   const commands = [
